@@ -24,7 +24,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "ci": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run build && pnpm run test"
+    "ci": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run build && pnpm run test",
+    "prepare": "husky"
   },
   "keywords": [
     "typescript"
@@ -38,9 +39,20 @@
     "@vitest/coverage-v8": "^2.1.4",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
     "vitest": "^2.1.4"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   },
   "engines": {
     "node": ">=18.0.0",
