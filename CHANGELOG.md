@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial project setup with TypeScript, pnpm, and ES modules
 - TypeScript configuration with strict mode enabled
-- Vitest for testing with 100% code coverage
+- Vitest for testing with code coverage
 - ESLint v9 with flat config format
 - Prettier for code formatting
 - GitHub Actions CI pipeline running on Node.js 18.x, 20.x, and 22.x
