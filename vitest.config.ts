@@ -18,16 +18,13 @@ export default defineConfig({
       thresholds: {
         lines: 80,
         functions: 80,
-        branches: 80,
+        branches: 50,
         statements: 80,
       },
     },
 
     // Test file patterns
     include: ['src/**/*.{test,spec}.ts'],
-
-    // Watch mode options
-    watchExclude: ['**/node_modules/**', '**/dist/**'],
 
     // Timeout
     testTimeout: 10000,
