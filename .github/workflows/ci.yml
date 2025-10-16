@@ -18,6 +18,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Read .nvmrc
+        id: nvmrc
+        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -28,6 +32,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
+      - name: Verify Node.js version matches .nvmrc for v22
+        if: matrix.node-version == '22.x'
+        run: |
+          if [[ "$(node --version)" != v${{ steps.nvmrc.outputs.NODE_VERSION }}.* ]]; then
+            echo "Warning: Node version doesn't match .nvmrc"
+          fi
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
