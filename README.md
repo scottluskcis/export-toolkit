@@ -7,81 +7,6 @@
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org/)
 
-## ✨ Features
-
-- 🚀 Export data to multiple formats (CSV, JSON, etc.)
-- 📦 TypeScript-first with full type safety
-- ✅ Comprehensive test coverage (100%)
-- 🎯 Modern ES modules
-- 🔧 Strict TypeScript configuration
-- 📝 Well-documented API with JSDoc comments
-
-## 📦 Installation
-
-```bash
-pnpm add outport
-# or
-npm install outport
-# or
-yarn add outport
-```
-
-## 🚀 Quick Start
-
-```typescript
-import { greet, add } from 'outport';
-
-// Greet someone
-console.log(greet('World')); // "Hello, World!"
-
-// Perform calculations
-console.log(add(2, 3)); // 5
-```
-
-## 📖 API Reference
-
-### `greet(name: string): string`
-
-Greets a person with a custom message.
-
-**Parameters:**
-
-- `name` - The name of the person to greet
-
-**Returns:** A greeting message
-
-**Example:**
-
-```typescript
-const message = greet('Alice');
-console.log(message); // "Hello, Alice!"
-```
-
-### `add(a: number, b: number): number`
-
-Adds two numbers together.
-
-**Parameters:**
-
-- `a` - The first number
-- `b` - The second number
-
-**Returns:** The sum of a and b
-
-**Example:**
-
-```typescript
-const result = add(2, 3);
-console.log(result); // 5
-```
-
-## 🛠️ Development
-
-### Prerequisites
-
-- Node.js >= 18.0.0 (recommended: 22.x via `.nvmrc`)
-- pnpm >= 8.0.0
-
 ### Setup
 
 ```bash
@@ -186,4 +111,3 @@ MIT © [scottluskcis](https://github.com/scottluskcis)
 - [Issue Tracker](https://github.com/scottluskcis/outport/issues)
 - [Changelog](https://github.com/scottluskcis/outport/blob/main/CHANGELOG.md)
 
----
