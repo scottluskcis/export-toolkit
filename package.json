@@ -33,7 +33,7 @@
   "author": "scottluskcis",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^22.8.7",
+    "@types/node": "^24.7.2",
     "@typescript-eslint/eslint-plugin": "^8.12.2",
     "@typescript-eslint/parser": "^8.12.2",
     "@vitest/coverage-v8": "^2.1.4",
