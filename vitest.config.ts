@@ -26,9 +26,6 @@ export default defineConfig({
     // Test file patterns
     include: ['src/**/*.{test,spec}.ts'],
 
-    // Watch mode options
-    watchExclude: ['**/node_modules/**', '**/dist/**'],
-
     // Timeout
     testTimeout: 10000,
   },
