@@ -52,6 +52,41 @@ await writer.append([
 ]);
 ```
 
+### Async Generator (Streaming Large Datasets)
+
+```typescript
+async function* fetchUsers(): AsyncGenerator<User> {
+  // Simulate fetching data in batches from database/API
+  for (let i = 0; i < 1000; i += 100) {
+    const batch = await fetchUserBatch(i, 100);
+    for (const user of batch) {
+      yield user;
+    }
+  }
+}
+
+const writer = new CsvWriter<User>({
+  type: 'csv',
+  mode: 'write',
+  file: './output/large-dataset.csv',
+});
+
+// Process first batch to initialize headers
+const generator = fetchUsers();
+const firstBatch = [];
+for (let i = 0; i < 100; i++) {
+  const { value, done } = await generator.next();
+  if (done) break;
+  firstBatch.push(value);
+}
+await writer.write(firstBatch);
+
+// Stream remaining rows
+for await (const user of generator) {
+  await writer.append(user);
+}
+```
+
 ## Custom Configuration
 
 ### Custom Delimiter
