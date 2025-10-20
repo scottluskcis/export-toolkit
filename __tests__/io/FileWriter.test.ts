@@ -4,7 +4,7 @@ import * as path from 'node:path';
 import { NodeFileWriter } from '../../src/io/FileWriter';
 
 describe('NodeFileWriter', () => {
-  const testDir = path.join(process.cwd(), '__tests__', 'temp');
+  const testDir = path.join(process.cwd(), '__tests__', 'temp', 'file-writer');
   let testFile: string;
   let fileWriter: NodeFileWriter;
 

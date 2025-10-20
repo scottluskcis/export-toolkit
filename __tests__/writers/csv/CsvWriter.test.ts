@@ -11,7 +11,7 @@ interface TestUser extends Record<string, unknown> {
 }
 
 describe('CsvWriter', () => {
-  const testDir = path.join(process.cwd(), '__tests__', 'temp');
+  const testDir = path.join(process.cwd(), '__tests__', 'temp', 'csv-writer');
   let testFile: string;
 
   beforeEach(() => {
