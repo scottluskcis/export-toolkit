@@ -98,12 +98,17 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
   /**
    * Formats and writes data rows (sync)
    */
-  private writeRowsSync(data: T[]): Result<void> {
+  private writeRowsSync(data: T[], isFirstWrite: boolean): Result<void> {
     try {
       const lines = data
         .map((obj) => this.headerManager.objectToValues(obj))
         .map((values) => this.formatter.formatRow(values))
         .join('\n');
+
+      if (isFirstWrite && this.options.mode === 'write') {
+        // In write mode on first write, we need to append to headers (not overwrite)
+        return this.fileWriter.appendSync(this.options.file, lines + '\n');
+      }
 
       return this.fileWriter.appendSync(this.options.file, lines + '\n');
     } catch (error) {
@@ -117,12 +122,17 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
   /**
    * Formats and writes data rows (async)
    */
-  private async writeRows(data: T[]): Promise<Result<void>> {
+  private async writeRows(data: T[], isFirstWrite: boolean): Promise<Result<void>> {
     try {
       const lines = data
         .map((obj) => this.headerManager.objectToValues(obj))
         .map((values) => this.formatter.formatRow(values))
         .join('\n');
+
+      if (isFirstWrite && this.options.mode === 'write') {
+        // In write mode on first write, we need to append to headers (not overwrite)
+        return await this.fileWriter.append(this.options.file, lines + '\n');
+      }
 
       return await this.fileWriter.append(this.options.file, lines + '\n');
     } catch (error) {
@@ -146,20 +156,27 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
       };
     }
 
+    let headersJustInitialized = false;
+
     // Initialize headers if needed
     if (!this.headerManager.isInitialized()) {
       const initResult = this.headerManager.initialize(data[0]!);
       if (!initResult.success) {
         return initResult;
       }
+      headersJustInitialized = true;
+    }
 
+    // In write mode, always write headers (overwriting existing content)
+    // In append mode, only write headers if file doesn't exist
+    if (this.options.mode === 'write' || headersJustInitialized) {
       const writeResult = this.writeHeadersSync();
       if (!writeResult.success) {
         return writeResult;
       }
     }
 
-    return this.writeRowsSync(data);
+    return this.writeRowsSync(data, true);
   }
 
   /**
@@ -173,20 +190,27 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
       };
     }
 
+    let headersJustInitialized = false;
+
     // Initialize headers if needed
     if (!this.headerManager.isInitialized()) {
       const initResult = this.headerManager.initialize(data[0]!);
       if (!initResult.success) {
         return initResult;
       }
+      headersJustInitialized = true;
+    }
 
+    // In write mode, always write headers (overwriting existing content)
+    // In append mode, only write headers if file doesn't exist
+    if (this.options.mode === 'write' || headersJustInitialized) {
       const writeResult = await this.writeHeaders();
       if (!writeResult.success) {
         return writeResult;
       }
     }
 
-    return await this.writeRows(data);
+    return await this.writeRows(data, true);
   }
 
   /**
@@ -212,7 +236,7 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
       }
     }
 
-    return this.writeRowsSync(dataArray);
+    return this.writeRowsSync(dataArray, false);
   }
 
   /**
@@ -238,6 +262,6 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
       }
     }
 
-    return await this.writeRows(dataArray);
+    return await this.writeRows(dataArray, false);
   }
 }
