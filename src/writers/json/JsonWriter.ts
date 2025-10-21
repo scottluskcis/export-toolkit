@@ -72,18 +72,18 @@ export class JsonWriter<T extends Record<string, unknown>> implements OutportWri
    * ```
    */
   constructor(
-    private readonly options: WriterOptions<T>,
+    private readonly options: WriterOptions<T> & { type: 'json' },
     fileWriter: FileWriter = new NodeFileWriter()
   ) {
     this.validate(options);
     this.fileWriter = fileWriter;
 
     // Initialize formatter with config
-    const prettyPrint = options.jsonConfig?.prettyPrint ?? true;
-    const indent = options.jsonConfig?.indent ?? 2;
+    const prettyPrint = options.config?.prettyPrint ?? true;
+    const indent = options.config?.indent ?? 2;
     this.formatter = new JsonFormatter(prettyPrint, indent);
 
-    this.includeUtf8Bom = options.jsonConfig?.includeUtf8Bom ?? false;
+    this.includeUtf8Bom = options.config?.includeUtf8Bom ?? false;
   }
 
   /**
@@ -102,7 +102,7 @@ export class JsonWriter<T extends Record<string, unknown>> implements OutportWri
       throw new ValidationError('File extension must be .json for JsonWriter');
     }
 
-    const indent = options.jsonConfig?.indent ?? 2;
+    const indent = options.config?.indent ?? 2;
     if (indent < 0 || indent > 10) {
       throw new ValidationError('Indent must be between 0 and 10');
     }

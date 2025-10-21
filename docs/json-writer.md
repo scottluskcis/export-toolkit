@@ -98,7 +98,7 @@ const writer = new JsonWriter<User>({
   type: 'json',
   mode: 'write',
   file: './output/users.json',
-  jsonConfig: {
+  config: {
     prettyPrint: false, // Single-line, compact JSON
   },
 });
@@ -111,7 +111,7 @@ const writer = new JsonWriter<User>({
   type: 'json',
   mode: 'write',
   file: './output/users.json',
-  jsonConfig: {
+  config: {
     prettyPrint: true,
     indent: 4, // Use 4 spaces instead of default 2
   },
@@ -125,7 +125,7 @@ const writer = new JsonWriter<User>({
   type: 'json',
   mode: 'write',
   file: './output/users.json',
-  jsonConfig: {
+  config: {
     includeUtf8Bom: true, // Adds BOM for compatibility with some legacy tools
   },
 });
@@ -164,7 +164,7 @@ const writer = WriterFactory.create<User>({
   type: 'json',
   mode: 'write',
   file: './output/users.json',
-  jsonConfig: {
+  config: {
     prettyPrint: true,
     indent: 2,
   },
@@ -262,7 +262,7 @@ const writer = new JsonWriter<Config>({
   type: 'json',
   mode: 'write',
   file: './config/generated.json',
-  jsonConfig: {
+  config: {
     prettyPrint: true,
     indent: 2,
   },
@@ -280,7 +280,7 @@ const writer = new JsonWriter<ProcessedData>({
   type: 'json',
   mode: 'write',
   file: './output/processed.json',
-  jsonConfig: {
+  config: {
     prettyPrint: false, // Compact for smaller files
   },
 });

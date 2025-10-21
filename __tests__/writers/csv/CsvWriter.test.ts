@@ -40,7 +40,8 @@ describe('CsvWriter', () => {
       };
 
       // Act & Assert
-      expect(() => new CsvWriter(options)).toThrow('Invalid writer type for CsvWriter');
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      expect(() => new CsvWriter(options as any)).toThrow('Invalid writer type for CsvWriter');
     });
 
     it('should throw error for empty file path', () => {
@@ -73,7 +74,7 @@ describe('CsvWriter', () => {
         type: 'csv',
         mode: 'write',
         file: testFile,
-        csvConfig: {
+        config: {
           delimiter: ',,',
         },
       };
@@ -88,7 +89,7 @@ describe('CsvWriter', () => {
         type: 'csv',
         mode: 'write',
         file: testFile,
-        csvConfig: {
+        config: {
           quote: '""',
         },
       };
@@ -127,7 +128,7 @@ describe('CsvWriter', () => {
         type: 'csv',
         mode: 'write',
         file: testFile,
-        csvConfig: {
+        config: {
           headers: ['ID', 'Name', 'Email'],
         },
       };
@@ -149,7 +150,7 @@ describe('CsvWriter', () => {
         type: 'csv',
         mode: 'write',
         file: testFile,
-        csvConfig: {
+        config: {
           columnMapping: {
             id: 'User ID',
             name: 'Full Name',
@@ -174,7 +175,7 @@ describe('CsvWriter', () => {
         type: 'csv',
         mode: 'write',
         file: testFile,
-        csvConfig: {
+        config: {
           includeKeys: ['name', 'email'],
         },
       };
@@ -195,7 +196,7 @@ describe('CsvWriter', () => {
         type: 'csv',
         mode: 'write',
         file: testFile,
-        csvConfig: {
+        config: {
           delimiter: '\t',
         },
       };
@@ -216,7 +217,7 @@ describe('CsvWriter', () => {
         type: 'csv',
         mode: 'write',
         file: testFile,
-        csvConfig: {
+        config: {
           includeUtf8Bom: true,
         },
       };

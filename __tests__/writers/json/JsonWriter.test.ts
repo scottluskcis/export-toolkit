@@ -41,7 +41,8 @@ describe('JsonWriter', () => {
       };
 
       // Act & Assert
-      expect(() => new JsonWriter(options)).toThrow('Invalid writer type for JsonWriter');
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      expect(() => new JsonWriter(options as any)).toThrow('Invalid writer type for JsonWriter');
     });
 
     it('should throw error for empty file path', () => {
@@ -74,7 +75,7 @@ describe('JsonWriter', () => {
         type: 'json',
         mode: 'write',
         file: testFile,
-        jsonConfig: {
+        config: {
           indent: -1,
         },
       };
@@ -89,7 +90,7 @@ describe('JsonWriter', () => {
         type: 'json',
         mode: 'write',
         file: testFile,
-        jsonConfig: {
+        config: {
           indent: 11,
         },
       };
@@ -131,7 +132,7 @@ describe('JsonWriter', () => {
         type: 'json',
         mode: 'write',
         file: testFile,
-        jsonConfig: {
+        config: {
           prettyPrint: false,
         },
       };
@@ -156,7 +157,7 @@ describe('JsonWriter', () => {
         type: 'json',
         mode: 'write',
         file: testFile,
-        jsonConfig: {
+        config: {
           prettyPrint: true,
           indent: 4,
         },
@@ -179,7 +180,7 @@ describe('JsonWriter', () => {
         type: 'json',
         mode: 'write',
         file: testFile,
-        jsonConfig: {
+        config: {
           includeUtf8Bom: true,
         },
       };

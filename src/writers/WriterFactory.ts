@@ -15,7 +15,7 @@ import { ValidationError } from '../errors';
  *   type: 'csv',
  *   mode: 'write',
  *   file: './output.csv',
- *   csvConfig: { delimiter: '\t' }
+ *   config: { delimiter: '\t' }
  * });
  * ```
  */
@@ -50,8 +50,10 @@ export class WriterFactory {
         return new JsonWriter<T>(config, fileWriter);
       default: {
         // Exhaustive check - this should never be reached
-        const _exhaustive: never = config.type;
-        throw new ValidationError(`Unknown writer type: ${String(_exhaustive)}`);
+        const _exhaustive: never = config;
+        throw new ValidationError(
+          `Unknown writer type: ${String((_exhaustive as WriterConfig<T>).type)}`
+        );
       }
     }
   }

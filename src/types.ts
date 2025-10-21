@@ -242,41 +242,62 @@ export interface JsonConfig {
 }
 
 /**
- * Complete writer options including type-specific configuration.
- *
- * Includes the base writer configuration plus optional format-specific settings.
- *
- * @template T - The type of data objects being written
- *
- * @example
- * ```typescript
- * const options: WriterOptions<User> = {
- *   type: 'csv',
- *   mode: 'write',
- *   file: './output/users.csv',
- *   csvConfig: {
- *     delimiter: '\t',
- *     includeUtf8Bom: true
- *   }
- * };
- * ```
+ * Base writer options shared across all writer types.
  */
-export interface WriterOptions<T = unknown> {
-  /** The type of writer to use (e.g., 'csv', 'json') */
-  type: WriterType;
-
+interface WriterOptionsBase {
   /** Write mode: 'write' to overwrite, 'append' to add to existing file */
   mode: WriterMode;
 
   /** Destination file path (absolute or relative) */
   file: string;
-
-  /** CSV-specific configuration options */
-  csvConfig?: CsvConfig<T>;
-
-  /** JSON-specific configuration options */
-  jsonConfig?: JsonConfig;
 }
+
+/**
+ * Complete writer options including type-specific configuration.
+ *
+ * Uses a discriminated union pattern to ensure type-safe configuration.
+ * The config property type is automatically inferred based on the writer type.
+ *
+ * @template T - The type of data objects being written
+ *
+ * @example
+ * ```typescript
+ * // CSV writer with type-safe config
+ * const csvOptions: WriterOptions<User> = {
+ *   type: 'csv',
+ *   mode: 'write',
+ *   file: './output/users.csv',
+ *   config: {
+ *     delimiter: '\t',
+ *     includeUtf8Bom: true
+ *   }
+ * };
+ *
+ * // JSON writer with type-safe config
+ * const jsonOptions: WriterOptions<User> = {
+ *   type: 'json',
+ *   mode: 'write',
+ *   file: './output/users.json',
+ *   config: {
+ *     prettyPrint: true,
+ *     indent: 2
+ *   }
+ * };
+ * ```
+ */
+export type WriterOptions<T = unknown> =
+  | (WriterOptionsBase & {
+      /** The type of writer to use */
+      type: 'csv';
+      /** CSV-specific configuration options */
+      config?: CsvConfig<T>;
+    })
+  | (WriterOptionsBase & {
+      /** The type of writer to use */
+      type: 'json';
+      /** JSON-specific configuration options */
+      config?: JsonConfig;
+    });
 
 /**
  * Alias for WriterOptions - used by factory pattern.
