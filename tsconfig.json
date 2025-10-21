@@ -35,6 +35,6 @@
     /* Completeness */
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "__tests__/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*", "__tests__/**/*", "samples/**/*"],
+  "exclude": ["node_modules", "dist", "samples/output"]
 }

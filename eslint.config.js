@@ -70,7 +70,18 @@ export default [
     },
   },
   {
-    ignores: ['dist/**', 'node_modules/**', 'coverage/**', '*.config.ts'],
+    files: ['samples/**/*.ts'],
+    rules: {
+      'no-console': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+    },
+  },
+  {
+    ignores: ['dist/**', 'node_modules/**', 'coverage/**', '*.config.ts', 'samples/output/**'],
   },
   prettierConfig,
 ];
