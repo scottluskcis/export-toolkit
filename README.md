@@ -56,6 +56,7 @@ outport/
 ## 📚 Documentation
 
 - **[CSV Writer Guide](docs/csv-writer.md)** - Examples and usage patterns for the CSV writer
+- **[JSON Writer Guide](docs/json-writer.md)** - Examples and usage patterns for the JSON writer
 
 ## 🧪 Testing
 
