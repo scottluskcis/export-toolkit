@@ -344,6 +344,12 @@ export class OutportBuilder<T extends Record<string, unknown>> {
   /**
    * Write data synchronously.
    *
+   * Note: Hooks in synchronous operations use fire-and-forget pattern (void operator).
+   * Since this is a sync method, we cannot await promise-based hooks. The void operator
+   * explicitly indicates we're intentionally ignoring any promises returned by hooks,
+   * allowing both sync and async hook implementations to work. This differs from the
+   * async write() method where hooks are properly awaited.
+   *
    * @param data - Array of data objects to write
    * @returns Result indicating success or failure
    *
@@ -371,7 +377,7 @@ export class OutportBuilder<T extends Record<string, unknown>> {
         totalRecords = processedData.length;
       }
 
-      // Report progress before write
+      // Report progress before write (fire-and-forget if hook returns a promise)
       if (this.hooks.onProgress) {
         void this.hooks.onProgress(0, totalRecords);
       }
@@ -380,20 +386,21 @@ export class OutportBuilder<T extends Record<string, unknown>> {
       const result = writer.writeSync(processedData);
 
       if (result.success) {
-        // Report completion progress
+        // Report completion progress (fire-and-forget if hook returns a promise)
         if (this.hooks.onProgress) {
           void this.hooks.onProgress(totalRecords, totalRecords);
         }
 
-        // Call afterWrite hook
+        // Call afterWrite hook (fire-and-forget if hook returns a promise)
         if (this.hooks.afterWrite) {
           void this.hooks.afterWrite(processedData, totalRecords);
         }
       } else if (this.hooks.onError) {
+        // Fire-and-forget error hook
         void this.hooks.onError(result.error);
       }
 
-      // Call complete hook
+      // Call complete hook (fire-and-forget if hook returns a promise)
       if (this.hooks.onComplete) {
         void this.hooks.onComplete(result, totalRecords);
       }
@@ -402,10 +409,12 @@ export class OutportBuilder<T extends Record<string, unknown>> {
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       if (this.hooks.onError) {
+        // Fire-and-forget error hook
         void this.hooks.onError(err);
       }
       const failResult: Result<void> = { success: false, error: err };
       if (this.hooks.onComplete) {
+        // Fire-and-forget complete hook
         void this.hooks.onComplete(failResult, totalRecords);
       }
       return failResult;

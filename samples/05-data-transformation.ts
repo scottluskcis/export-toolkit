@@ -25,6 +25,18 @@ interface RawUser extends Record<string, unknown> {
   salary: number;
 }
 
+interface TransformedUser extends Record<string, unknown> {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  age: number;
+  active: boolean;
+  salary: number;
+  fullName: string;
+  salaryBand: 'High' | 'Medium';
+}
+
 async function main() {
   const rawUsers: RawUser[] = [
     {
@@ -86,11 +98,11 @@ async function main() {
       const activeUsers = data.filter((user) => user.active);
       console.log(`🔍 After filtering (active only): ${activeUsers.length} users`);
 
-      // Transform: Add full name, redact salary
-      const transformed = activeUsers.map((user) => ({
+      // Transform: Add full name, add salary band
+      const transformed: TransformedUser[] = activeUsers.map((user) => ({
         ...user,
         fullName: `${user.firstName} ${user.lastName}`,
-        salary: (user.salary > 80000 ? 'High' : 'Medium') as unknown as number,
+        salaryBand: user.salary > 80000 ? 'High' : 'Medium',
       }));
 
       console.log(`✨ Transformation complete\n`);
