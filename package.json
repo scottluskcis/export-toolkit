@@ -1,6 +1,6 @@
 {
   "name": "outport",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Tool for exporting data to a format that can be used for reporting such as CSV, JSON, etc.",
   "type": "module",
   "main": "./dist/index.js",
