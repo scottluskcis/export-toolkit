@@ -127,7 +127,7 @@ This pushes:
    - Format: `vX.Y.Z` (e.g., `v0.0.7`)
 
 4. **Add Release Description**:
-   - Copy the relevant section from [`CHANGELOG.md`](CHANGELOG.md)
+   - Copy the relevant section from [`CHANGELOG.md`](../CHANGELOG.md)
    - Format it nicely for GitHub (supports Markdown)
 
 5. **Publish Release**:
