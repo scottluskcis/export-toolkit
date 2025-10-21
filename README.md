@@ -38,6 +38,8 @@ pnpm install
 ```
 outport/
 ├── .github/           # GitHub Actions workflows and configs
+├── docs/              # Documentation
+│   └── csv-writer.md  # CSV Writer usage guide
 ├── src/               # Source TypeScript files
 │   ├── index.ts       # Main entry point
 │   └── index.test.ts  # Test files
@@ -50,6 +52,11 @@ outport/
 ├── eslint.config.js   # ESLint configuration (flat config)
 └── .prettierrc        # Prettier configuration
 ```
+
+## 📚 Documentation
+
+- **[CSV Writer Guide](docs/csv-writer.md)** - Examples and usage patterns for the CSV writer
+- **[JSON Writer Guide](docs/json-writer.md)** - Examples and usage patterns for the JSON writer
 
 ## 🧪 Testing
 
