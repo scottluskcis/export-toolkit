@@ -1,64 +1,29 @@
 import { describe, it, expect } from 'vitest';
-import { greet, add } from './index.js';
+import { WriterFactory, ValidationError } from './index.js';
 
-describe('greet', () => {
-  it('should greet a person with their name', () => {
-    // Arrange
-    const name = 'Alice';
-
-    // Act
-    const result = greet(name);
-
-    // Assert
-    expect(result).toBe('Hello, Alice!');
+describe('WriterFactory', () => {
+  it('should export WriterFactory', () => {
+    expect(WriterFactory).toBeDefined();
+    expect(typeof WriterFactory.create).toBe('function');
   });
 
-  it('should handle empty string', () => {
-    // Arrange
-    const name = '';
-
-    // Act
-    const result = greet(name);
-
-    // Assert
-    expect(result).toBe('Hello, !');
-  });
-});
-
-describe('add', () => {
-  it('should add two positive numbers', () => {
-    // Arrange
-    const a = 2;
-    const b = 3;
-
-    // Act
-    const result = add(a, b);
-
-    // Assert
-    expect(result).toBe(5);
+  it('should throw ValidationError for unknown writer type', () => {
+    expect(() => {
+      WriterFactory.create({
+        type: 'unknown' as never,
+        mode: 'write',
+        file: 'test.csv',
+      });
+    }).toThrow(ValidationError);
   });
 
-  it('should add negative numbers', () => {
-    // Arrange
-    const a = -5;
-    const b = 3;
-
-    // Act
-    const result = add(a, b);
-
-    // Assert
-    expect(result).toBe(-2);
-  });
-
-  it('should add zero', () => {
-    // Arrange
-    const a = 10;
-    const b = 0;
-
-    // Act
-    const result = add(a, b);
-
-    // Assert
-    expect(result).toBe(10);
+  it('should throw ValidationError for JSON writer (not yet implemented)', () => {
+    expect(() => {
+      WriterFactory.create({
+        type: 'json',
+        mode: 'write',
+        file: 'test.json',
+      });
+    }).toThrow('JSON writer not yet implemented');
   });
 });
