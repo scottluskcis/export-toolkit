@@ -6,6 +6,7 @@ export type {
   WriterType,
   WriterMode,
   CsvConfig,
+  JsonConfig,
   Result,
   FileWriter,
 } from './types';
@@ -15,12 +16,14 @@ export {
   OutportError,
   ValidationError,
   CsvFormattingError,
+  JsonFormattingError,
   FileWriteError,
   HeaderInitializationError,
 } from './errors';
 
 // Export writers
 export { CsvWriter } from './writers/csv/CsvWriter';
+export { JsonWriter } from './writers/json/JsonWriter';
 export { WriterFactory } from './writers/WriterFactory';
 
 // Export file writer implementation

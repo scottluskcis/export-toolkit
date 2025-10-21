@@ -1,5 +1,6 @@
 import type { OutportWriter, WriterConfig, FileWriter } from '../types';
 import { CsvWriter } from './csv/CsvWriter';
+import { JsonWriter } from './json/JsonWriter';
 import { ValidationError } from '../errors';
 
 /**
@@ -14,7 +15,7 @@ import { ValidationError } from '../errors';
  *   type: 'csv',
  *   mode: 'write',
  *   file: './output.csv',
- *   csvConfig: { delimiter: '\t' }
+ *   config: { delimiter: '\t' }
  * });
  * ```
  */
@@ -46,11 +47,13 @@ export class WriterFactory {
       case 'csv':
         return new CsvWriter<T>(config, fileWriter);
       case 'json':
-        throw new ValidationError('JSON writer not yet implemented');
+        return new JsonWriter<T>(config, fileWriter);
       default: {
         // Exhaustive check - this should never be reached
-        const _exhaustive: never = config.type;
-        throw new ValidationError(`Unknown writer type: ${String(_exhaustive)}`);
+        const _exhaustive: never = config;
+        throw new ValidationError(
+          `Unknown writer type: ${String((_exhaustive as WriterConfig<T>).type)}`
+        );
       }
     }
   }

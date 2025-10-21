@@ -70,21 +70,21 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
    * ```
    */
   constructor(
-    private readonly options: WriterOptions<T>,
+    private readonly options: WriterOptions<T> & { type: 'csv' },
     fileWriter: FileWriter = new NodeFileWriter()
   ) {
     this.validate(options);
     this.fileWriter = fileWriter;
 
     // Initialize formatter with config
-    const delimiter = options.csvConfig?.delimiter ?? ',';
-    const quote = options.csvConfig?.quote ?? '"';
+    const delimiter = options.config?.delimiter ?? ',';
+    const quote = options.config?.quote ?? '"';
     this.formatter = new CsvFormatter(delimiter, quote);
 
     // Initialize header manager
-    this.headerManager = new CsvHeaderManager<T>(options.csvConfig);
+    this.headerManager = new CsvHeaderManager<T>(options.config);
 
-    this.includeUtf8Bom = options.csvConfig?.includeUtf8Bom ?? false;
+    this.includeUtf8Bom = options.config?.includeUtf8Bom ?? false;
   }
 
   /**
@@ -103,12 +103,12 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
       throw new ValidationError('File extension must be .csv for CsvWriter');
     }
 
-    const delimiter = options.csvConfig?.delimiter ?? ',';
+    const delimiter = options.config?.delimiter ?? ',';
     if (delimiter.length !== 1) {
       throw new ValidationError('Delimiter must be a single character');
     }
 
-    const quote = options.csvConfig?.quote ?? '"';
+    const quote = options.config?.quote ?? '"';
     if (quote.length !== 1) {
       throw new ValidationError('Quote character must be a single character');
     }
