@@ -1,5 +1,6 @@
 import type { OutportWriter, WriterConfig, FileWriter } from '../types';
 import { CsvWriter } from './csv/CsvWriter';
+import { JsonWriter } from './json/JsonWriter';
 import { ValidationError } from '../errors';
 
 /**
@@ -46,7 +47,7 @@ export class WriterFactory {
       case 'csv':
         return new CsvWriter<T>(config, fileWriter);
       case 'json':
-        throw new ValidationError('JSON writer not yet implemented');
+        return new JsonWriter<T>(config, fileWriter);
       default: {
         // Exhaustive check - this should never be reached
         const _exhaustive: never = config.type;
