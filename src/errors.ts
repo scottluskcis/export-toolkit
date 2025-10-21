@@ -55,6 +55,19 @@ export class CsvFormattingError extends OutportError {
 }
 
 /**
+ * Error thrown when JSON formatting fails.
+ *
+ * This error occurs when data cannot be properly formatted as JSON,
+ * typically due to circular references or non-serializable values.
+ */
+export class JsonFormattingError extends OutportError {
+  constructor(message: string) {
+    super(message);
+    this.name = 'JsonFormattingError';
+  }
+}
+
+/**
  * Error thrown when file write operation fails.
  *
  * This error wraps underlying file system errors, providing context
