@@ -7,7 +7,7 @@
  * Run: npx tsx samples/01-basic-csv-export.ts
  */
 
-import { outport } from '../src/index.js';
+import { outport } from '../src/index';
 import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
