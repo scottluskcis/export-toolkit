@@ -49,7 +49,6 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 ### Testing
 
 - Write tests for all new functionality
-- Place test files in the `__tests__/` folder, mirroring the source structure
 - Use descriptive test names
 - Follow AAA pattern: Arrange, Act, Assert
 - Aim for 80%+ code coverage
