@@ -197,6 +197,51 @@ export interface CsvConfig<T> {
 }
 
 /**
+ * JSON-specific configuration options.
+ *
+ * Customize JSON output format, indentation, and structure.
+ *
+ * @example
+ * ```typescript
+ * // Pretty-printed with 2-space indentation
+ * const config: JsonConfig = {
+ *   prettyPrint: true,
+ *   indent: 2
+ * };
+ * ```
+ */
+export interface JsonConfig {
+  /**
+   * Enable pretty-printing (formatted with indentation and newlines).
+   *
+   * When true, output will be human-readable with proper indentation.
+   * When false, output will be compact single-line JSON.
+   *
+   * @default true
+   */
+  prettyPrint?: boolean;
+
+  /**
+   * Number of spaces for indentation when prettyPrint is enabled.
+   *
+   * Only applies when prettyPrint is true.
+   *
+   * @default 2
+   */
+  indent?: number;
+
+  /**
+   * Include UTF-8 Byte Order Mark (BOM) at the start of the file.
+   *
+   * Set to true for better compatibility with some legacy tools when your data
+   * contains non-ASCII characters (accents, emoji, etc.).
+   *
+   * @default false
+   */
+  includeUtf8Bom?: boolean;
+}
+
+/**
  * Complete writer options including type-specific configuration.
  *
  * Includes the base writer configuration plus optional format-specific settings.
@@ -228,6 +273,9 @@ export interface WriterOptions<T = unknown> {
 
   /** CSV-specific configuration options */
   csvConfig?: CsvConfig<T>;
+
+  /** JSON-specific configuration options */
+  jsonConfig?: JsonConfig;
 }
 
 /**
