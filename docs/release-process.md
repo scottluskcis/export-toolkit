@@ -100,7 +100,7 @@ npm version major
 
 This command:
 
-- Updates the `version` field in [`package.json`](package.json)
+- Updates the `version` field in [`package.json`](../package.json)
 - Creates a git commit with the message "X.Y.Z"
 - Creates a git tag `vX.Y.Z`
 
