@@ -85,7 +85,7 @@ git push origin main
 
 ### 1. Bump Version
 
-Use npm's built-in version command to update [`package.json`](package.json) and create a git tag:
+Use npm's built-in version command to update [`package.json`](../package.json) and create a git tag:
 
 ```bash
 # For bug fixes (0.0.6 → 0.0.7)
