@@ -35,7 +35,7 @@ yarn add @scottluskcis/outport
 ### Simple Export
 
 ```typescript
-import { outport } from 'outport';
+import { outport } from '@scottluskcis/outport';
 
 interface User {
   id: number;
@@ -104,7 +104,7 @@ console.log(`Total exported: ${result.value}`);
 
 ```typescript
 import { Command } from 'commander';
-import { outport } from 'outport';
+import { outport } from '@scottluskcis/outport';
 
 const program = new Command();
 

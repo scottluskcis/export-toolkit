@@ -7,7 +7,7 @@ Quick reference for using the `CsvWriter` class to export data to CSV files.
 ### Simple Write
 
 ```typescript
-import { CsvWriter } from 'outport';
+import { CsvWriter } from '@scottluskcis/outport';
 
 interface User {
   id: number;
@@ -177,7 +177,7 @@ if (result.success) {
 Use the `WriterFactory` to create writers:
 
 ```typescript
-import { WriterFactory } from 'outport';
+import { WriterFactory } from '@scottluskcis/outport';
 
 const writer = WriterFactory.create<User>({
   type: 'csv',

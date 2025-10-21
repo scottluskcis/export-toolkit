@@ -7,7 +7,7 @@ Quick reference for using the `JsonWriter` class to export data to JSON files.
 ### Simple Write
 
 ```typescript
-import { JsonWriter } from 'outport';
+import { JsonWriter } from '@scottluskcis/outport';
 
 interface User {
   id: number;
@@ -158,7 +158,7 @@ if (result.success) {
 Use the `WriterFactory` to create writers:
 
 ```typescript
-import { WriterFactory } from 'outport';
+import { WriterFactory } from '@scottluskcis/outport';
 
 const writer = WriterFactory.create<User>({
   type: 'json',
