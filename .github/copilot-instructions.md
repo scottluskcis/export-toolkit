@@ -41,7 +41,6 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 
 - Source files in `src/`
 - Test files in `__tests__/` folder with `.test.ts` extension (or `.spec.ts`)
-  - Tests can also be placed alongside source files with `.test.ts` extension
   - Organize test files to mirror the structure of source files
 - One export per file when possible
 - Barrel exports in `index.ts` files
