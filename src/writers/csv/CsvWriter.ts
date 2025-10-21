@@ -5,7 +5,46 @@ import { CsvFormatter } from './CsvFormatter';
 import { CsvHeaderManager } from './CsvHeaderManager';
 
 /**
- * CSV writer implementation that delegates to specialized helper classes
+ * CSV Writer for exporting data to CSV files.
+ *
+ * Provides both synchronous and asynchronous methods for writing and appending
+ * data with support for custom delimiters, headers, column mapping, and more.
+ *
+ * The writer handles header initialization, value formatting, and file I/O,
+ * delegating to specialized helper classes for each concern.
+ *
+ * @template T - The type of data objects being written. Must extend Record<string, unknown>
+ *
+ * @example
+ * ```typescript
+ * interface User extends Record<string, unknown> {
+ *   id: number;
+ *   name: string;
+ *   email: string;
+ * }
+ *
+ * const writer = new CsvWriter<User>({
+ *   type: 'csv',
+ *   mode: 'write',
+ *   file: './users.csv',
+ *   csvConfig: {
+ *     headers: ['ID', 'Name', 'Email'],
+ *     delimiter: ',',
+ *     includeUtf8Bom: true
+ *   }
+ * });
+ *
+ * const users = [
+ *   { id: 1, name: 'Alice', email: 'alice@example.com' },
+ *   { id: 2, name: 'Bob', email: 'bob@example.com' }
+ * ];
+ *
+ * // Synchronous write
+ * const result = writer.writeSync(users);
+ *
+ * // Asynchronous append
+ * await writer.append({ id: 3, name: 'Charlie', email: 'charlie@example.com' });
+ * ```
  */
 export class CsvWriter<T extends Record<string, unknown>> implements OutportWriter<T> {
   private readonly formatter: CsvFormatter;
@@ -13,6 +52,23 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
   private readonly fileWriter: FileWriter;
   private readonly includeUtf8Bom: boolean;
 
+  /**
+   * Creates a new CSV writer instance.
+   *
+   * @param options - Configuration options for the CSV writer
+   * @param fileWriter - Optional custom file writer for dependency injection (useful for testing)
+   *
+   * @throws {ValidationError} If configuration is invalid (e.g., non-csv type, empty file path, multi-character delimiter)
+   *
+   * @example
+   * ```typescript
+   * const writer = new CsvWriter<User>({
+   *   type: 'csv',
+   *   mode: 'write',
+   *   file: './output.csv'
+   * });
+   * ```
+   */
   constructor(
     private readonly options: WriterOptions<T>,
     fileWriter: FileWriter = new NodeFileWriter()
@@ -146,7 +202,30 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
   // ==================== PUBLIC API ====================
 
   /**
-   * Writes multiple rows of data to file (sync)
+   * Synchronously writes multiple rows of data to the file.
+   *
+   * In 'write' mode, this overwrites the entire file. In 'append' mode,
+   * this adds data to the end of the file.
+   *
+   * Headers are automatically initialized from the first data object if not
+   * already set. In 'write' mode, headers are written on each call.
+   *
+   * @param data - Array of data objects to write
+   * @returns Result indicating success or failure
+   *
+   * @example
+   * ```typescript
+   * const result = writer.writeSync([
+   *   { id: 1, name: 'Alice' },
+   *   { id: 2, name: 'Bob' }
+   * ]);
+   *
+   * if (result.success) {
+   *   console.log('Write successful!');
+   * } else {
+   *   console.error('Write failed:', result.error.message);
+   * }
+   * ```
    */
   writeSync(data: T[]): Result<void> {
     if (data.length === 0) {
@@ -180,7 +259,28 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
   }
 
   /**
-   * Writes multiple rows of data to file (async)
+   * Asynchronously writes multiple rows of data to the file.
+   *
+   * In 'write' mode, this overwrites the entire file. In 'append' mode,
+   * this adds data to the end of the file.
+   *
+   * Headers are automatically initialized from the first data object if not
+   * already set. In 'write' mode, headers are written on each call.
+   *
+   * @param data - Array of data objects to write
+   * @returns Promise of Result indicating success or failure
+   *
+   * @example
+   * ```typescript
+   * const result = await writer.write([
+   *   { id: 1, name: 'Alice' },
+   *   { id: 2, name: 'Bob' }
+   * ]);
+   *
+   * if (result.success) {
+   *   console.log('Write successful!');
+   * }
+   * ```
    */
   async write(data: T[]): Promise<Result<void>> {
     if (data.length === 0) {
@@ -214,7 +314,28 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
   }
 
   /**
-   * Appends single or multiple rows to the file (sync)
+   * Synchronously appends one or more rows to the file.
+   *
+   * If the file doesn't exist, creates it with headers. If headers haven't been
+   * initialized, they are inferred from the first data object.
+   *
+   * @param data - Single data object or array of objects to append
+   * @returns Result indicating success or failure
+   *
+   * @example
+   * ```typescript
+   * // Append single row
+   * writer.appendSync({ id: 3, name: 'Charlie' });
+   *
+   * // Append multiple rows
+   * writer.appendSync([
+   *   { id: 4, name: 'Diana' },
+   *   { id: 5, name: 'Eve' }
+   * ]);
+   *
+   * // Append empty array is allowed (no-op)
+   * writer.appendSync([]);
+   * ```
    */
   appendSync(data: T | T[]): Result<void> {
     const dataArray = Array.isArray(data) ? data : [data];
@@ -240,7 +361,23 @@ export class CsvWriter<T extends Record<string, unknown>> implements OutportWrit
   }
 
   /**
-   * Appends single or multiple rows to the file (async)
+   * Asynchronously appends one or more rows to the file.
+   *
+   * If the file doesn't exist, creates it with headers. If headers haven't been
+   * initialized, they are inferred from the first data object.
+   *
+   * Useful for streaming large datasets or processing async generators.
+   *
+   * @param data - Single data object or array of objects to append
+   * @returns Promise of Result indicating success or failure
+   *
+   * @example
+   * ```typescript
+   * // Append from async generator
+   * for await (const user of fetchUsers()) {
+   *   await writer.append(user);
+   * }
+   * ```
    */
   async append(data: T | T[]): Promise<Result<void>> {
     const dataArray = Array.isArray(data) ? data : [data];

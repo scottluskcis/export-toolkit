@@ -4,7 +4,21 @@ import type { FileWriter as IFileWriter, Result } from '../types';
 import { FileWriteError } from '../errors';
 
 /**
- * Default file writer implementation using Node.js fs module
+ * Default file writer implementation using Node.js fs module.
+ *
+ * Provides both synchronous and asynchronous file operations with
+ * proper error handling using the Result type pattern.
+ *
+ * @example
+ * ```typescript
+ * const writer = new NodeFileWriter();
+ *
+ * // Synchronous write
+ * const result = writer.writeSync('./output.txt', 'Hello, World!');
+ *
+ * // Asynchronous write
+ * const result = await writer.write('./output.txt', 'Hello, World!');
+ * ```
  */
 export class NodeFileWriter implements IFileWriter {
   writeSync(path: string, content: string): Result<void> {
