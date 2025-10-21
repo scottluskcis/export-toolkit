@@ -230,7 +230,7 @@ describe('StreamingWriter', () => {
     it('should handle errors during streaming', async () => {
       async function* errorGenerator(): AsyncGenerator<TestUser> {
         yield { id: 1, name: 'User1', email: 'user1@example.com' };
-        await Promise.resolve(); // Add await to fix lint error
+        await Promise.resolve(); // Perform async operation before error
         throw new Error('Generator error');
       }
 
