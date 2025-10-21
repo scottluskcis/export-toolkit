@@ -2,6 +2,7 @@ name: Publish to npm
 
 permissions:
   contents: read
+  id-token: write # Required for provenance
 
 on:
   release:
@@ -32,7 +33,7 @@ jobs:
         run: pnpm run ci
 
       - name: Publish to npm
-        run: pnpm publish --no-git-checks
+        run: pnpm publish --no-git-checks --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

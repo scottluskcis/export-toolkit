@@ -1,39 +1,63 @@
-# Source files
+# Source files (already compiled to dist/)
 src/
+__tests__/
+samples/
+docs/
+
+# Build artifacts
+coverage/
+*.tsbuildinfo
+.turbo/
+
+# Development files
+.github/
+.husky/
+.vscode/
+.idea/
+*.log
 *.test.ts
 *.spec.ts
+*.test.js
+*.spec.js
+*.test.d.ts
+*.spec.d.ts
 
 # Config files
-tsconfig.json
-vitest.config.ts
-eslint.config.js
+.nvmrc
 .prettierrc
 .prettierignore
 .editorconfig
-.nvmrc
+eslint.config.js
+vitest.config.ts
+tsconfig.json
 
-# CI/CD
-.github/
+# Git
+.git/
 .gitignore
-.husky/
+.gitattributes
 
-# Development
-coverage/
+# Node modules
 node_modules/
-.vscode/
-.idea/
+
+# Temp directories
+temp/
 
 # Logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Misc
-.DS_Store
+# Environment files
 .env
 .env.local
 .env.*.local
 
-# Documentation
+# OS files
+.DS_Store
+
+# Documentation (keep only essential)
+*.md
+!README.md
+!LICENSE
+!CHANGELOG.md
