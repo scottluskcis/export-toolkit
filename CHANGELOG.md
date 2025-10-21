@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.7] - 2025-10-21
+
+- **Publishing Updates** - updates for npm publishing process
+
 ## [0.0.6] - 2025-10-21
 
 ### Added
@@ -72,5 +76,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added npm provenance for supply chain security
 - Implemented granular npm access tokens
 
-[unreleased]: https://github.com/scottluskcis/outport/compare/v0.0.6...HEAD
-[0.0.6]: https://github.com/scottluskcis/outport/releases/tag/v0.0.6
+[unreleased]: https://github.com/scottluskcis/outport/compare/v0.0.7...HEAD
+[0.0.7]: https://github.com/scottluskcis/outport/releases/tag/v0.0.7
