@@ -13,6 +13,7 @@ import { outport } from '../src/index.js';
 import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
+import * as crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,7 +48,7 @@ async function* fetchLogsPaginated(
         level,
         message: `Log message ${i + 1}`,
         requestId: `req-${Math.random().toString(36).substring(7)}`,
-        userId: Math.floor(Math.random() * 1000),
+        userId: crypto.randomInt(0, 1000),
       });
     }
 
