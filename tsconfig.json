@@ -33,8 +33,9 @@
     "allowUnreachableCode": false,
 
     /* Completeness */
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "rootDir": "./src"
   },
-  "include": ["src/**/*", "__tests__/**/*", "samples/**/*"],
-  "exclude": ["node_modules", "dist", "samples/output"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
