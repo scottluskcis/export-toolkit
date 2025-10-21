@@ -25,13 +25,30 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "ci": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run build && pnpm run test",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepublishOnly": "pnpm run ci"
   },
   "keywords": [
-    "typescript"
+    "export",
+    "csv",
+    "json",
+    "data-export",
+    "reporting",
+    "typescript",
+    "streaming",
+    "builder-pattern",
+    "file-writer"
   ],
   "author": "scottluskcis",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scottluskcis/outport.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scottluskcis/outport/issues"
+  },
+  "homepage": "https://github.com/scottluskcis/outport#readme",
   "devDependencies": {
     "@types/node": "^24.8.1",
     "@typescript-eslint/eslint-plugin": "^8.12.2",
