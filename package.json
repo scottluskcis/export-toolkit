@@ -29,7 +29,8 @@
     "typecheck": "tsc --noEmit",
     "ci": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run build && pnpm run test",
     "prepare": "husky",
-    "prepublishOnly": "pnpm run ci"
+    "prepublishOnly": "pnpm run ci",
+    "release:check": "pnpm run ci && echo '\n✅ Ready for release! Next steps:\n1. Update CHANGELOG.md\n2. Run: npm version [patch|minor|major]\n3. Run: git push && git push --tags\n4. Create GitHub release'"
   },
   "keywords": [
     "export",
