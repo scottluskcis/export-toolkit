@@ -7,6 +7,217 @@
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org/)
 
+## ✨ Features
+
+- 🚀 **Fluent Builder API** - Intuitive, chainable configuration
+- 📝 **CSV & JSON Support** - Export to popular formats
+- 🔄 **Async Generator Streaming** - Handle large datasets efficiently
+- 🪝 **Lifecycle Hooks** - Transform, validate, and track progress
+- 💪 **Type-Safe** - Full TypeScript support with strict typing
+- ⚡ **High Performance** - Automatic batching and memory optimization
+- 🎯 **Commander.js Integration** - Perfect for CLI tools
+- 🧪 **Well-Tested** - 170+ tests with 80%+ coverage
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+npm install outport
+# or
+pnpm add outport
+# or
+yarn add outport
+```
+
+### Simple Export
+
+```typescript
+import { outport } from 'outport';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+const users: User[] = [
+  { id: 1, name: 'Alice', email: 'alice@example.com' },
+  { id: 2, name: 'Bob', email: 'bob@example.com' },
+];
+
+// CSV export
+await outport<User>().to('./users.csv').write(users);
+
+// JSON export
+await outport<User>().to('./users.json').prettyPrint().write(users);
+```
+
+### With Configuration
+
+```typescript
+// Tab-separated CSV with custom headers
+await outport<User>()
+  .to('./users.tsv')
+  .withDelimiter('\t')
+  .withHeaders(['ID', 'Full Name', 'Email Address'])
+  .withUtf8Bom(true)
+  .write(users);
+```
+
+### With Progress Tracking
+
+```typescript
+await outport<User>()
+  .to('./users.csv')
+  .onProgress((current, total) => {
+    console.log(`Progress: ${current}/${total}`);
+  })
+  .write(users);
+```
+
+### Streaming Large Datasets
+
+```typescript
+async function* fetchUsers(): AsyncGenerator<User> {
+  for (let page = 1; page <= 100; page++) {
+    const users = await api.getUsers(page);
+    for (const user of users) {
+      yield user;
+    }
+  }
+}
+
+// Automatically batched for efficiency
+const result = await outport<User>()
+  .to('./users.csv')
+  .withBatchSize(100)
+  .onProgress((count) => console.log(`Exported ${count} users...`))
+  .fromAsyncGenerator(fetchUsers());
+
+console.log(`Total exported: ${result.value}`);
+```
+
+### Commander.js Integration
+
+```typescript
+import { Command } from 'commander';
+import { outport } from 'outport';
+
+const program = new Command();
+
+program
+  .command('export')
+  .option('-o, --output <file>', 'Output file')
+  .action(async (options) => {
+    const users = await fetchUsers();
+
+    await outport<User>()
+      .to(options.output)
+      .onProgress((current, total) => {
+        process.stdout.write(`\rExporting: ${current}/${total}`);
+      })
+      .onComplete((result, total) => {
+        if (result.success) {
+          console.log(`\n✓ Exported ${total} users`);
+        }
+      })
+      .write(users);
+  });
+```
+
+## 📚 Documentation
+
+- **[Builder API Guide](docs/builder-api.md)** - Complete guide to the fluent builder API
+- **[CSV Writer Guide](docs/csv-writer.md)** - CSV-specific examples and patterns
+- **[JSON Writer Guide](docs/json-writer.md)** - JSON-specific examples and patterns
+- **[Type Safety Examples](docs/type-safety-example.md)** - TypeScript usage patterns
+
+## 🎯 Key Concepts
+
+### Builder Pattern
+
+The fluent builder API makes configuration intuitive and self-documenting:
+
+```typescript
+await outport<User>()
+  .to('./users.csv') // Where to write
+  .withDelimiter(',') // CSV config
+  .withHeaders(['ID', 'Name']) // Custom headers
+  .onProgress(trackProgress) // Lifecycle hooks
+  .write(users); // Execute
+```
+
+### Lifecycle Hooks
+
+Tap into the export process at key points:
+
+```typescript
+await outport<User>()
+  .to('./users.csv')
+  .onBeforeWrite((data) => data.filter((u) => u.active)) // Transform
+  .onProgress((current, total) => updateUI(current)) // Track
+  .onAfterWrite((data, count) => logExport(count)) // Post-process
+  .onError((error) => handleError(error)) // Error handling
+  .onComplete((result, total) => notify(total)) // Completion
+  .write(users);
+```
+
+### Async Generator Streaming
+
+Process millions of records without loading them all into memory:
+
+```typescript
+async function* streamFromDatabase() {
+  let offset = 0;
+  const batchSize = 1000;
+
+  while (true) {
+    const records = await db.query({ offset, limit: batchSize });
+    if (records.length === 0) break;
+
+    for (const record of records) {
+      yield record;
+    }
+
+    offset += batchSize;
+  }
+}
+
+// Automatically batched and memory-efficient
+await outport<Record>()
+  .to('./records.csv')
+  .withBatchSize(500)
+  .fromAsyncGenerator(streamFromDatabase());
+```
+
+## 🏗️ Architecture
+
+Outport follows SOLID principles and clean architecture:
+
+- **Single Responsibility**: Each class has one job (formatting, writing, batching)
+- **Open/Closed**: Extend with hooks without modifying core code
+- **Liskov Substitution**: All writers implement the same interface
+- **Interface Segregation**: Separate interfaces for different concerns
+- **Dependency Inversion**: Depend on abstractions, not concretions
+
+### Core Components
+
+```
+Builder API (Fluent Interface)
+     ↓
+WriterFactory (Abstraction)
+     ↓
+├── CsvWriter ──→ CsvFormatter, CsvHeaderManager
+└── JsonWriter ──→ JsonFormatter
+     ↓
+FileWriter (I/O Abstraction)
+     ↓
+Node.js File System
+```
+
+## 🔧 Development
+
 ### Setup
 
 ```bash
