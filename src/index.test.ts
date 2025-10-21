@@ -17,13 +17,13 @@ describe('WriterFactory', () => {
     }).toThrow(ValidationError);
   });
 
-  it('should throw ValidationError for JSON writer (not yet implemented)', () => {
+  it('should create JsonWriter successfully', () => {
     expect(() => {
       WriterFactory.create({
         type: 'json',
         mode: 'write',
         file: 'test.json',
       });
-    }).toThrow('JSON writer not yet implemented');
+    }).not.toThrow();
   });
 });
