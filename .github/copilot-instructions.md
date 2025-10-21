@@ -16,6 +16,18 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 
 ## Code Standards
 
+### Design Principles
+
+- Follow **SOLID** design patterns:
+  - **S**ingle Responsibility Principle: Each class/module should have one reason to change
+  - **O**pen/Closed Principle: Open for extension, closed for modification
+  - **L**iskov Substitution Principle: Subtypes must be substitutable for their base types
+  - **I**nterface Segregation Principle: Don't force clients to depend on interfaces they don't use
+  - **D**ependency Inversion Principle: Depend on abstractions, not concretions
+- Favor composition over inheritance
+- Keep functions and methods small and focused
+- Use dependency injection for better testability
+
 ### TypeScript
 
 - Always use ES modules (`import`/`export`)
@@ -28,7 +40,8 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 ### File Organization
 
 - Source files in `src/`
-- Test files alongside source with `.test.ts` extension
+- Test files in `__tests__/` folder with `.test.ts` extension (or `.spec.ts`)
+  - Organize test files to mirror the structure of source files
 - One export per file when possible
 - Barrel exports in `index.ts` files
 
@@ -60,11 +73,16 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 
 ### Before Committing
 
-1. Run `pnpm run typecheck` to verify types
-2. Run `pnpm run lint` to check for linting errors
-3. Run `pnpm run format:check` to verify formatting
-4. Run `pnpm run test` to ensure tests pass
-5. Or use `pnpm run ci` to run all checks
+1. **Always check linting and formatting first:**
+   - Run `pnpm run lint` to check for linting errors
+   - Run `pnpm run format:check` to verify formatting
+   - Or fix automatically with `pnpm run lint:fix` and `pnpm run format`
+2. **Then ensure all CI checks pass:**
+   - Run `pnpm run typecheck` to verify types
+   - Run `pnpm run test` to ensure tests pass
+3. **Or use `pnpm run ci` to run all checks at once** (recommended)
+   - This runs: typecheck → lint → format:check → build → test
+   - **All changes must pass `pnpm run ci` before committing**
 
 ### Scripts
 
@@ -105,6 +123,10 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 - Add JSDoc comments for public APIs
 - Keep README.md up to date
 - Document complex algorithms inline
+- **When adding new features, create documentation in the `docs/` folder**
+  - Follow the existing pattern (e.g., `csv-writer.md`, `json-writer.md`)
+  - Include usage examples and API reference
+  - Update the README to link to new documentation
 - Update this file when project conventions change
 
 ## CI/CD
@@ -113,13 +135,19 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 - CI runs on Node.js 18.x, 20.x, and 22.x
 - Must pass: typecheck, lint, format check, build, and tests
 - Coverage reports uploaded for Node.js 22.x
+- **Copilot code review automatically runs on all pull requests**
+  - Review feedback should be addressed before merging
+  - Copilot may suggest improvements for code quality, security, and best practices
 
 ## Contributing
 
 When adding new features:
 
 1. Create a feature branch
-2. Write tests first (TDD)
-3. Implement the feature
-4. Ensure all CI checks pass locally
-5. Create a pull request with clear description
+2. Write tests first (TDD) in the `__tests__/` folder
+3. Implement the feature following SOLID principles
+4. Create documentation in the `docs/` folder
+5. Ensure linting and formatting pass (`pnpm run lint`, `pnpm run format:check`)
+6. **Ensure all CI checks pass locally (`pnpm run ci`)**
+7. Create a pull request with clear description
+8. Address any Copilot review feedback
