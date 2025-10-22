@@ -5,8 +5,8 @@ import type {
   CsvConfig,
   JsonConfig,
   Result,
-} from '../types';
-import { WriterFactory } from '../writers/WriterFactory';
+} from '../types.js';
+import { WriterFactory } from '../writers/WriterFactory.js';
 import type {
   BeforeWriteHook,
   AfterWriteHook,
@@ -14,9 +14,9 @@ import type {
   ErrorHook,
   CompleteHook,
   LifecycleHooks,
-} from './hooks';
-import { ValidationError } from '../errors';
-import { StreamingWriter } from '../streaming/StreamingWriter';
+} from './hooks.js';
+import { ValidationError } from '../errors.js';
+import { StreamingWriter } from '../streaming/StreamingWriter.js';
 
 /**
  * Fluent builder for creating and configuring data writers.

@@ -40,7 +40,6 @@ describe('CsvWriter', () => {
       };
 
       // Act & Assert
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(() => new CsvWriter(options as any)).toThrow('Invalid writer type for CsvWriter');
     });
 

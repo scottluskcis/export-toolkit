@@ -9,7 +9,7 @@ export type {
   JsonConfig,
   Result,
   FileWriter,
-} from './types';
+} from './types.js';
 
 // Export errors
 export {
@@ -19,18 +19,18 @@ export {
   JsonFormattingError,
   FileWriteError,
   HeaderInitializationError,
-} from './errors';
+} from './errors.js';
 
 // Export writers
-export { CsvWriter } from './writers/csv/CsvWriter';
-export { JsonWriter } from './writers/json/JsonWriter';
-export { WriterFactory } from './writers/WriterFactory';
+export { CsvWriter } from './writers/csv/CsvWriter.js';
+export { JsonWriter } from './writers/json/JsonWriter.js';
+export { WriterFactory } from './writers/WriterFactory.js';
 
 // Export file writer implementation
-export { NodeFileWriter } from './io/FileWriter';
+export { NodeFileWriter } from './io/FileWriter.js';
 
 // Export builder API
-export { OutportBuilder } from './builder';
+export { OutportBuilder } from './builder/index.js';
 export type {
   BeforeWriteHook,
   AfterWriteHook,
@@ -38,11 +38,11 @@ export type {
   ErrorHook,
   CompleteHook,
   LifecycleHooks,
-} from './builder';
+} from './builder/index.js';
 
 // Export convenience functions
-export { outport } from './convenience';
+export { outport } from './convenience/index.js';
 
 // Export streaming utilities
-export { StreamingWriter, BatchProcessor } from './streaming';
-export type { StreamingOptions } from './streaming';
+export { StreamingWriter, BatchProcessor } from './streaming/index.js';
+export type { StreamingOptions } from './streaming/index.js';

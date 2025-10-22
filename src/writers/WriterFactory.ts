@@ -1,7 +1,7 @@
-import type { OutportWriter, WriterConfig, FileWriter } from '../types';
-import { CsvWriter } from './csv/CsvWriter';
-import { JsonWriter } from './json/JsonWriter';
-import { ValidationError } from '../errors';
+import type { OutportWriter, WriterConfig, FileWriter } from '../types.js';
+import { CsvWriter } from './csv/CsvWriter.js';
+import { JsonWriter } from './json/JsonWriter.js';
+import { ValidationError } from '../errors.js';
 
 /**
  * Factory for creating data writer instances.

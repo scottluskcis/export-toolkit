@@ -1,8 +1,8 @@
-import type { OutportWriter, WriterOptions, Result, FileWriter } from '../../types';
-import { ValidationError, CsvFormattingError } from '../../errors';
-import { NodeFileWriter } from '../../io/FileWriter';
-import { CsvFormatter } from './CsvFormatter';
-import { CsvHeaderManager } from './CsvHeaderManager';
+import type { OutportWriter, WriterOptions, Result, FileWriter } from '../../types.js';
+import { ValidationError, CsvFormattingError } from '../../errors.js';
+import { NodeFileWriter } from '../../io/FileWriter.js';
+import { CsvFormatter } from './CsvFormatter.js';
+import { CsvHeaderManager } from './CsvHeaderManager.js';
 
 /**
  * CSV Writer for exporting data to CSV files.

@@ -1,7 +1,7 @@
-import type { OutportWriter, WriterOptions, Result, FileWriter } from '../../types';
-import { ValidationError, JsonFormattingError } from '../../errors';
-import { NodeFileWriter } from '../../io/FileWriter';
-import { JsonFormatter } from './JsonFormatter';
+import type { OutportWriter, WriterOptions, Result, FileWriter } from '../../types.js';
+import { ValidationError, JsonFormattingError } from '../../errors.js';
+import { NodeFileWriter } from '../../io/FileWriter.js';
+import { JsonFormatter } from './JsonFormatter.js';
 import * as fs from 'node:fs';
 import * as fsPromises from 'node:fs/promises';
 

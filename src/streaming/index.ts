@@ -1,3 +1,3 @@
-export { StreamingWriter } from './StreamingWriter';
-export { BatchProcessor } from './BatchProcessor';
-export type { StreamingOptions } from './StreamingWriter';
+export { StreamingWriter } from './StreamingWriter.js';
+export { BatchProcessor } from './BatchProcessor.js';
+export type { StreamingOptions } from './StreamingWriter.js';

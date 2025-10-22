@@ -1,6 +1,6 @@
-import type { OutportWriter, Result } from '../types';
-import { BatchProcessor } from './BatchProcessor';
-import type { ProgressHook } from '../builder/hooks';
+import type { OutportWriter, Result } from '../types.js';
+import { BatchProcessor } from './BatchProcessor.js';
+import type { ProgressHook } from '../builder/hooks.js';
 
 /**
  * Options for streaming write operations.
