@@ -1,6 +1,6 @@
 {
   "name": "@scottluskcis/outport",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Tool for exporting data to a format that can be used for reporting such as CSV, JSON, etc.",
   "type": "module",
   "main": "./dist/index.js",
