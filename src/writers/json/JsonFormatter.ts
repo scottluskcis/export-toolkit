@@ -1,4 +1,4 @@
-import { JsonFormattingError } from '../../errors';
+import { JsonFormattingError } from '../../errors.js';
 
 /**
  * Handles JSON formatting logic - converting data to properly formatted JSON strings.

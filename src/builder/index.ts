@@ -1,4 +1,4 @@
-export { OutportBuilder } from './OutportBuilder';
+export { OutportBuilder } from './OutportBuilder.js';
 export type {
   BeforeWriteHook,
   AfterWriteHook,
@@ -6,4 +6,4 @@ export type {
   ErrorHook,
   CompleteHook,
   LifecycleHooks,
-} from './hooks';
+} from './hooks.js';

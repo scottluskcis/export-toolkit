@@ -1,4 +1,4 @@
-import { OutportBuilder } from '../builder/OutportBuilder';
+import { OutportBuilder } from '../builder/OutportBuilder.js';
 
 /**
  * Creates a new fluent builder for configuring and executing data exports.

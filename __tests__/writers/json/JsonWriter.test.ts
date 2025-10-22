@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -41,7 +40,6 @@ describe('JsonWriter', () => {
       };
 
       // Act & Assert
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(() => new JsonWriter(options as any)).toThrow('Invalid writer type for JsonWriter');
     });
 

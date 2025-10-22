@@ -1,5 +1,5 @@
-import type { CsvConfig, Result } from '../../types';
-import { HeaderInitializationError } from '../../errors';
+import type { CsvConfig, Result } from '../../types.js';
+import { HeaderInitializationError } from '../../errors.js';
 
 /**
  * Manages CSV header initialization and key determination

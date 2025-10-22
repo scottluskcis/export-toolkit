@@ -1,1 +1,1 @@
-export { outport } from './factory';
+export { outport } from './factory.js';

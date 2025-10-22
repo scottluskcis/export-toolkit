@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import * as fsPromises from 'node:fs/promises';
-import type { FileWriter as IFileWriter, Result } from '../types';
-import { FileWriteError } from '../errors';
+import type { FileWriter as IFileWriter, Result } from '../types.js';
+import { FileWriteError } from '../errors.js';
 
 /**
  * Default file writer implementation using Node.js fs module.

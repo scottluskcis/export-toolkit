@@ -7,6 +7,8 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 ## Technology Stack
 
 - **TypeScript**: Strict mode enabled with modern ES2022+ features
+  - Uses Node16 module resolution for proper ES module support
+  - All relative imports require `.js` extensions
 - **Package Manager**: pnpm (required)
 - **Build Tool**: TypeScript Compiler (tsc)
 - **Testing**: Vitest with coverage support
@@ -31,6 +33,9 @@ This is a TypeScript project using modern best practices with ES modules, pnpm p
 ### TypeScript
 
 - Always use ES modules (`import`/`export`)
+- **All relative imports MUST include `.js` extensions** (e.g., `'./types.js'`, not `'./types'`)
+  - This is required for Node16 module resolution
+  - TypeScript will correctly map `.js` to `.ts` files during compilation
 - Enable strict type checking
 - Prefer type inference but add explicit return types for exported functions
 - Use `type` imports when importing only types

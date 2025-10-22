@@ -1,4 +1,4 @@
-import type { Result } from '../types';
+import type { Result } from '../types.js';
 
 /**
  * Hook called before data is written.
