@@ -1,6 +1,6 @@
 # Release Process
 
-This document outlines the standardized release process for `@scottluskcis/outport`.
+This document outlines the standardized release process for `@scottluskcis/export-toolkit`.
 
 ## Pre-Release Checklist
 
@@ -49,8 +49,8 @@ Follow the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format:
    - **Security** - Security improvements
 4. **Update comparison links at bottom of file**:
    ```markdown
-   [unreleased]: https://github.com/scottluskcis/outport/compare/vX.Y.Z...HEAD
-   [x.y.z]: https://github.com/scottluskcis/outport/compare/vX.Y.Z-1...vX.Y.Z
+   [unreleased]: https://github.com/scottluskcis/export-toolkit/compare/vX.Y.Z...HEAD
+   [x.y.z]: https://github.com/scottluskcis/export-toolkit/compare/vX.Y.Z-1...vX.Y.Z
    ```
 
 Example:
@@ -69,8 +69,8 @@ Example:
 
 - Bug fix for issue #123
 
-[unreleased]: https://github.com/scottluskcis/outport/compare/v0.0.7...HEAD
-[0.0.7]: https://github.com/scottluskcis/outport/compare/v0.0.6...v0.0.7
+[unreleased]: https://github.com/scottluskcis/export-toolkit/compare/v0.0.7...HEAD
+[0.0.7]: https://github.com/scottluskcis/export-toolkit/compare/v0.0.6...v0.0.7
 ```
 
 ### 4. Commit Changelog
@@ -118,7 +118,7 @@ This pushes:
 ### 3. Create GitHub Release
 
 1. **Navigate to Releases**:
-   - Go to: https://github.com/scottluskcis/outport/releases/new
+   - Go to: https://github.com/scottluskcis/export-toolkit/releases/new
 
 2. **Select the Tag**:
    - Choose the tag you just created (e.g., `v0.0.7`)
@@ -137,7 +137,7 @@ This pushes:
 ### 4. Monitor Workflow
 
 1. **Watch the GitHub Action**:
-   - Go to: https://github.com/scottluskcis/outport/actions
+   - Go to: https://github.com/scottluskcis/export-toolkit/actions
    - Look for "Publish to npm" workflow
    - Ensure it completes successfully
 
@@ -152,20 +152,20 @@ After the workflow completes:
 1. **Check npm Registry**:
 
    ```bash
-   npm view @scottluskcis/outport
+   npm view @scottluskcis/export-toolkit
    ```
 
    Should show the new version.
 
 2. **Visit npm Package Page**:
-   - Go to: https://www.npmjs.com/package/@scottluskcis/outport
+   - Go to: https://www.npmjs.com/package/@scottluskcis/export-toolkit
    - Verify the new version is listed
    - Check for the provenance badge (🔒 verified)
 
 3. **Test Installation**:
 
    ```bash
-   npm install @scottluskcis/outport@latest
+   npm install @scottluskcis/export-toolkit@latest
    ```
 
    Or in a test project:
@@ -173,8 +173,8 @@ After the workflow completes:
    ```bash
    mkdir test-install && cd test-install
    npm init -y
-   npm install @scottluskcis/outport
-   node -e "console.log(require('@scottluskcis/outport'))"
+   npm install @scottluskcis/export-toolkit
+   node -e "console.log(require('@scottluskcis/export-toolkit'))"
    ```
 
 ## Post-Release
@@ -184,7 +184,7 @@ After the workflow completes:
 Check what was actually published:
 
 ```bash
-npm pack @scottluskcis/outport@latest --dry-run
+npm pack @scottluskcis/export-toolkit@latest --dry-run
 ```
 
 This shows the files included in the published package.
@@ -260,7 +260,7 @@ Increment when you make **backward-compatible bug fixes**:
 
 1. **Authentication Error**:
    - Verify `NPM_TOKEN` secret is set correctly
-   - Ensure token has "Read and write" permissions for `@scottluskcis/outport`
+   - Ensure token has "Read and write" permissions for `@scottluskcis/export-toolkit`
    - Check token hasn't expired
 
 2. **Version Already Published**:
@@ -281,7 +281,7 @@ Increment when you make **backward-compatible bug fixes**:
 
 ```bash
 # Unpublish the incorrect version (use sparingly!)
-npm unpublish @scottluskcis/outport@X.Y.Z
+npm unpublish @scottluskcis/export-toolkit@X.Y.Z
 
 # Publish the correct version
 npm version patch
@@ -308,7 +308,7 @@ git push && git push --tags
 
 2. **Deprecate the broken version**:
    ```bash
-   npm deprecate @scottluskcis/outport@X.Y.Z "Critical bug, please upgrade to X.Y.Z+1"
+   npm deprecate @scottluskcis/export-toolkit@X.Y.Z "Critical bug, please upgrade to X.Y.Z+1"
    ```
 
 ## Emergency Contacts
@@ -323,21 +323,21 @@ git push && git push --tags
 npm pack --dry-run
 
 # View package info on npm
-npm view @scottluskcis/outport
+npm view @scottluskcis/export-toolkit
 
 # View specific version
-npm view @scottluskcis/outport@X.Y.Z
+npm view @scottluskcis/export-toolkit@X.Y.Z
 
 # List all published versions
-npm view @scottluskcis/outport versions
+npm view @scottluskcis/export-toolkit versions
 
 # Check latest version
-npm view @scottluskcis/outport version
+npm view @scottluskcis/export-toolkit version
 
 # Test package in a temporary directory
 mkdir /tmp/test-outport && cd /tmp/test-outport
 npm init -y
-npm install @scottluskcis/outport
+npm install @scottluskcis/export-toolkit
 ```
 
 ## Release Frequency

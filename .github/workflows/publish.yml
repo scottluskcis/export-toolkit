@@ -39,4 +39,4 @@ jobs:
 
       - name: Report publication
         run: |
-          echo "✅ Successfully published @scottluskcis/outport@$(node -p "require('./package.json').version") to npm"
+          echo "✅ Successfully published @scottluskcis/export-toolkit@$(node -p "require('./package.json').version") to npm"

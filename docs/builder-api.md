@@ -5,7 +5,7 @@ The Builder API provides a fluent, chainable interface for configuring and execu
 ## Quick Start
 
 ```typescript
-import { outport } from '@scottluskcis/outport';
+import { outport } from '@scottluskcis/export-toolkit';
 
 // Simple CSV export
 await outport<User>().to('./users.csv').write(users);
@@ -307,7 +307,7 @@ Perfect for CLI tools using Commander.js:
 
 ```typescript
 import { Command } from 'commander';
-import { outport } from '@scottluskcis/outport';
+import { outport } from '@scottluskcis/export-toolkit';
 
 const program = new Command();
 
@@ -343,7 +343,7 @@ program.parse();
 ### Example 1: Database Export with Pagination
 
 ```typescript
-import { outport } from '@scottluskcis/outport';
+import { outport } from '@scottluskcis/export-toolkit';
 import { db } from './database';
 
 async function* fetchAllUsers() {
@@ -532,7 +532,7 @@ await outport<User>()
 ### Before (Direct Writer)
 
 ```typescript
-import { CsvWriter } from '@scottluskcis/outport';
+import { CsvWriter } from '@scottluskcis/export-toolkit';
 
 const writer = new CsvWriter<User>({
   type: 'csv',
@@ -550,7 +550,7 @@ const result = await writer.write(users);
 ### After (Builder API)
 
 ```typescript
-import { outport } from '@scottluskcis/outport';
+import { outport } from '@scottluskcis/export-toolkit';
 
 const result = await outport<User>()
   .to('./users.csv')

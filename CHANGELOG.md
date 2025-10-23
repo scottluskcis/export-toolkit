@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 🚀 Migration Note
+
+**The package has been renamed from `@scottluskcis/outport` to `@scottluskcis/export-toolkit`.**
+
+To migrate:
+
+```bash
+# Uninstall the old package
+npm uninstall @scottluskcis/outport
+
+# Install the new package
+npm install @scottluskcis/export-toolkit
+```
+
+Update your imports:
+
+```typescript
+// Before
+import { outport } from '@scottluskcis/outport';
+
+// After
+import { outport } from '@scottluskcis/export-toolkit';
+```
+
+The API remains unchanged - only the package name has changed.
+
+---
+
+## [1.0.0] - 2025-10-23
+
+### Changed
+
+- **BREAKING**: Package renamed from `@scottluskcis/outport` to `@scottluskcis/export-toolkit`
+- **BREAKING**: Repository renamed from `scottluskcis/outport` to `scottluskcis/export-toolkit`
+- Version bumped to 1.0.0 to signify package stability and the rename
+
+### Note
+
+This is purely a rename - the API and functionality remain unchanged. Upgrading requires only updating the package name in your `package.json` and import statements.
+
 ## [Unreleased]
 
 ## [0.0.7] - 2025-10-21
@@ -15,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Initial public release** of `@scottluskcis/outport`
+- **Initial public release** of `@scottluskcis/export-toolkit` (formerly `@scottluskcis/outport`)
 - **Fluent Builder API** - Intuitive, chainable configuration for data exports
 - **CSV Export Support**
   - Configurable delimiters (comma, tab, semicolon, pipe)
@@ -76,5 +116,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added npm provenance for supply chain security
 - Implemented granular npm access tokens
 
-[unreleased]: https://github.com/scottluskcis/outport/compare/v0.0.7...HEAD
-[0.0.7]: https://github.com/scottluskcis/outport/releases/tag/v0.0.7
+[unreleased]: https://github.com/scottluskcis/export-toolkit/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/scottluskcis/export-toolkit/releases/tag/v1.0.0
+[0.0.7]: https://github.com/scottluskcis/export-toolkit/releases/tag/v0.0.7

@@ -1,6 +1,6 @@
 {
-  "name": "@scottluskcis/outport",
-  "version": "0.0.10",
+  "name": "@scottluskcis/export-toolkit",
+  "version": "1.0.0",
   "description": "Tool for exporting data to a format that can be used for reporting such as CSV, JSON, etc.",
   "type": "module",
   "main": "./dist/index.js",
@@ -48,12 +48,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scottluskcis/outport.git"
+    "url": "https://github.com/scottluskcis/export-toolkit.git"
   },
   "bugs": {
-    "url": "https://github.com/scottluskcis/outport/issues"
+    "url": "https://github.com/scottluskcis/export-toolkit/issues"
   },
-  "homepage": "https://github.com/scottluskcis/outport#readme",
+  "homepage": "https://github.com/scottluskcis/export-toolkit#readme",
   "devDependencies": {
     "@types/node": "^24.8.1",
     "@typescript-eslint/eslint-plugin": "^8.12.2",
