@@ -275,4 +275,166 @@ describe('CsvHeaderManager', () => {
       }
     });
   });
+
+  describe('flattenNestedObjects config option', () => {
+    interface NestedUser extends Record<string, unknown> {
+      id: number;
+      name: string;
+      address: {
+        street: string;
+        city: string;
+      };
+      tags: string[];
+    }
+
+    const nestedUser: NestedUser = {
+      id: 1,
+      name: 'John Doe',
+      address: {
+        street: '123 Main St',
+        city: 'NYC',
+      },
+      tags: ['tag1', 'tag2'],
+    };
+
+    it('should flatten nested objects when option is enabled', () => {
+      // Arrange
+      const config: CsvConfig<NestedUser> = {
+        flattenNestedObjects: true,
+      };
+      const manager = new CsvHeaderManager<NestedUser>(config);
+
+      // Act
+      const result = manager.initialize(nestedUser);
+
+      // Assert
+      expect(result.success).toBe(true);
+      expect(manager.getHeaders()).toEqual([
+        'id',
+        'name',
+        'address_street',
+        'address_city',
+        'tags',
+      ]);
+    });
+
+    it('should convert flattened object to values correctly', () => {
+      // Arrange
+      const config: CsvConfig<NestedUser> = {
+        flattenNestedObjects: true,
+      };
+      const manager = new CsvHeaderManager<NestedUser>(config);
+      manager.initialize(nestedUser);
+
+      // Act
+      const values = manager.objectToValues(nestedUser);
+
+      // Assert
+      expect(values).toEqual([1, 'John Doe', '123 Main St', 'NYC', '["tag1","tag2"]']);
+    });
+
+    it('should not flatten when option is disabled', () => {
+      // Arrange
+      const config: CsvConfig<NestedUser> = {
+        flattenNestedObjects: false,
+      };
+      const manager = new CsvHeaderManager<NestedUser>(config);
+
+      // Act
+      const result = manager.initialize(nestedUser);
+
+      // Assert
+      expect(result.success).toBe(true);
+      expect(manager.getHeaders()).toEqual(['id', 'name', 'address', 'tags']);
+    });
+
+    it('should not flatten when option is not provided', () => {
+      // Arrange
+      const manager = new CsvHeaderManager<NestedUser>();
+
+      // Act
+      const result = manager.initialize(nestedUser);
+
+      // Assert
+      expect(result.success).toBe(true);
+      expect(manager.getHeaders()).toEqual(['id', 'name', 'address', 'tags']);
+    });
+
+    it('should handle deeply nested objects', () => {
+      // Arrange
+      interface DeeplyNested extends Record<string, unknown> {
+        id: number;
+        user: {
+          name: string;
+          location: {
+            address: {
+              street: string;
+              city: string;
+            };
+          };
+        };
+      }
+
+      const deeplyNested: DeeplyNested = {
+        id: 1,
+        user: {
+          name: 'John',
+          location: {
+            address: {
+              street: '123 Main St',
+              city: 'NYC',
+            },
+          },
+        },
+      };
+
+      const config: CsvConfig<DeeplyNested> = {
+        flattenNestedObjects: true,
+      };
+      const manager = new CsvHeaderManager<DeeplyNested>(config);
+
+      // Act
+      const result = manager.initialize(deeplyNested);
+
+      // Assert
+      expect(result.success).toBe(true);
+      expect(manager.getHeaders()).toEqual([
+        'id',
+        'user_name',
+        'user_location_address_street',
+        'user_location_address_city',
+      ]);
+    });
+
+    it('should handle null values in nested objects', () => {
+      // Arrange
+      interface UserWithNull extends Record<string, unknown> {
+        id: number;
+        profile: {
+          name: string;
+          middleName: null;
+        };
+      }
+
+      const userWithNull: UserWithNull = {
+        id: 1,
+        profile: {
+          name: 'John',
+          middleName: null,
+        },
+      };
+
+      const config: CsvConfig<UserWithNull> = {
+        flattenNestedObjects: true,
+      };
+      const manager = new CsvHeaderManager<UserWithNull>(config);
+
+      // Act
+      manager.initialize(userWithNull);
+      const values = manager.objectToValues(userWithNull);
+
+      // Assert
+      expect(values).toEqual([1, 'John', null]);
+    });
+  });
 });
