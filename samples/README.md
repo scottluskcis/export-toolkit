@@ -1,6 +1,6 @@
-# Outport Samples
+# Export Toolkit Samples
 
-This directory contains practical, runnable examples demonstrating how to use the Outport library's builder API for various real-world scenarios.
+This directory contains practical, runnable examples demonstrating how to use the Export Toolkit library's builder API for various real-world scenarios.
 
 ## Prerequisites
 

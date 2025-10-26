@@ -1,13 +1,13 @@
-# outport
+# export-toolkit
 
 > Tool for exporting data to a format that can be used for reporting such as CSV, JSON, etc.
 
-[![CI](https://github.com/scottluskcis/outport/actions/workflows/ci.yml/badge.svg)](https://github.com/scottluskcis/outport/actions/workflows/ci.yml)
+[![CI](https://github.com/scottluskcis/export-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/scottluskcis/export-toolkit/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org/)
-[![npm version](https://badge.fury.io/js/@scottluskcis%2Foutport.svg)](https://www.npmjs.com/package/@scottluskcis/outport)
-[![npm downloads](https://img.shields.io/npm/dm/@scottluskcis/outport.svg)](https://www.npmjs.com/package/@scottluskcis/outport)
+[![npm version](https://badge.fury.io/js/@scottluskcis%2Fexport-toolkit.svg)](https://www.npmjs.com/package/@scottluskcis/export-toolkit)
+[![npm downloads](https://img.shields.io/npm/dm/@scottluskcis/export-toolkit.svg)](https://www.npmjs.com/package/@scottluskcis/export-toolkit)
 
 ## ✨ Features
 
@@ -25,17 +25,17 @@
 ### Installation
 
 ```bash
-npm install @scottluskcis/outport
+npm install @scottluskcis/export-toolkit
 # or
-pnpm add @scottluskcis/outport
+pnpm add @scottluskcis/export-toolkit
 # or
-yarn add @scottluskcis/outport
+yarn add @scottluskcis/export-toolkit
 ```
 
 ### Simple Export
 
 ```typescript
-import { outport } from '@scottluskcis/outport';
+import { outport } from '@scottluskcis/export-toolkit';
 
 interface User {
   id: number;
@@ -104,7 +104,7 @@ console.log(`Total exported: ${result.value}`);
 
 ```typescript
 import { Command } from 'commander';
-import { outport } from '@scottluskcis/outport';
+import { outport } from '@scottluskcis/export-toolkit';
 
 const program = new Command();
 
@@ -224,8 +224,8 @@ Node.js File System
 
 ```bash
 # Clone the repository
-git clone https://github.com/scottluskcis/outport.git
-cd outport
+git clone https://github.com/scottluskcis/export-toolkit.git
+cd export-toolkit
 
 # Install dependencies
 pnpm install
@@ -249,7 +249,7 @@ pnpm install
 ### Project Structure
 
 ```
-outport/
+export-toolkit/
 ├── .github/           # GitHub Actions workflows and configs
 ├── docs/              # Documentation
 │   └── csv-writer.md  # CSV Writer usage guide
@@ -327,6 +327,6 @@ MIT © [scottluskcis](https://github.com/scottluskcis)
 
 ## 🔗 Links
 
-- [GitHub Repository](https://github.com/scottluskcis/outport)
-- [Issue Tracker](https://github.com/scottluskcis/outport/issues)
-- [Changelog](https://github.com/scottluskcis/outport/blob/main/CHANGELOG.md)
+- [GitHub Repository](https://github.com/scottluskcis/export-toolkit)
+- [Issue Tracker](https://github.com/scottluskcis/export-toolkit/issues)
+- [Changelog](https://github.com/scottluskcis/export-toolkit/blob/main/CHANGELOG.md)
