@@ -526,6 +526,296 @@ describe('CsvWriter', () => {
     });
   });
 
+  describe('flattenNestedObjects option', () => {
+    interface NestedUser extends Record<string, unknown> {
+      id: number;
+      name: string;
+      address: {
+        street: string;
+        city: string;
+        zip: string;
+      };
+      contact: {
+        email: string;
+        phone: string;
+      };
+    }
+
+    it('should write flattened CSV with nested objects (writeSync)', () => {
+      // Arrange
+      const options: WriterOptions<NestedUser> = {
+        type: 'csv',
+        mode: 'write',
+        file: testFile,
+        config: {
+          flattenNestedObjects: true,
+        },
+      };
+      const writer = new CsvWriter<NestedUser>(options);
+      const data: NestedUser[] = [
+        {
+          id: 1,
+          name: 'John Doe',
+          address: { street: '123 Main St', city: 'NYC', zip: '10001' },
+          contact: { email: 'john@example.com', phone: '555-1234' },
+        },
+        {
+          id: 2,
+          name: 'Jane Smith',
+          address: { street: '456 Oak Ave', city: 'LA', zip: '90001' },
+          contact: { email: 'jane@example.com', phone: '555-5678' },
+        },
+      ];
+
+      // Act
+      const result = writer.writeSync(data);
+
+      // Assert
+      expect(result.success).toBe(true);
+      const content = fs.readFileSync(testFile, 'utf-8');
+      const lines = content.split('\n').filter((line) => line.length > 0);
+
+      expect(lines[0]).toBe(
+        'id,name,address_street,address_city,address_zip,contact_email,contact_phone'
+      );
+      expect(lines[1]).toBe('1,John Doe,123 Main St,NYC,10001,john@example.com,555-1234');
+      expect(lines[2]).toBe('2,Jane Smith,456 Oak Ave,LA,90001,jane@example.com,555-5678');
+    });
+
+    it('should write flattened CSV with nested objects (async write)', async () => {
+      // Arrange
+      const options: WriterOptions<NestedUser> = {
+        type: 'csv',
+        mode: 'write',
+        file: testFile,
+        config: {
+          flattenNestedObjects: true,
+        },
+      };
+      const writer = new CsvWriter<NestedUser>(options);
+      const data: NestedUser[] = [
+        {
+          id: 1,
+          name: 'John Doe',
+          address: { street: '123 Main St', city: 'NYC', zip: '10001' },
+          contact: { email: 'john@example.com', phone: '555-1234' },
+        },
+      ];
+
+      // Act
+      const result = await writer.write(data);
+
+      // Assert
+      expect(result.success).toBe(true);
+      const content = fs.readFileSync(testFile, 'utf-8');
+      const lines = content.split('\n').filter((line) => line.length > 0);
+
+      expect(lines[0]).toBe(
+        'id,name,address_street,address_city,address_zip,contact_email,contact_phone'
+      );
+      expect(lines[1]).toBe('1,John Doe,123 Main St,NYC,10001,john@example.com,555-1234');
+    });
+
+    it('should append flattened rows (appendSync)', () => {
+      // Arrange
+      const options: WriterOptions<NestedUser> = {
+        type: 'csv',
+        mode: 'append',
+        file: testFile,
+        config: {
+          flattenNestedObjects: true,
+        },
+      };
+      const writer = new CsvWriter<NestedUser>(options);
+      const user1: NestedUser = {
+        id: 1,
+        name: 'John Doe',
+        address: { street: '123 Main St', city: 'NYC', zip: '10001' },
+        contact: { email: 'john@example.com', phone: '555-1234' },
+      };
+      const user2: NestedUser = {
+        id: 2,
+        name: 'Jane Smith',
+        address: { street: '456 Oak Ave', city: 'LA', zip: '90001' },
+        contact: { email: 'jane@example.com', phone: '555-5678' },
+      };
+
+      // Act
+      writer.appendSync(user1);
+      writer.appendSync(user2);
+
+      // Assert
+      const content = fs.readFileSync(testFile, 'utf-8');
+      const lines = content.split('\n').filter((line) => line.length > 0);
+
+      expect(lines.length).toBe(3);
+      expect(lines[0]).toBe(
+        'id,name,address_street,address_city,address_zip,contact_email,contact_phone'
+      );
+      expect(lines[1]).toBe('1,John Doe,123 Main St,NYC,10001,john@example.com,555-1234');
+      expect(lines[2]).toBe('2,Jane Smith,456 Oak Ave,LA,90001,jane@example.com,555-5678');
+    });
+
+    it('should handle arrays in nested objects by converting to JSON', () => {
+      // Arrange
+      interface UserWithArray extends Record<string, unknown> {
+        id: number;
+        profile: {
+          name: string;
+          tags: string[];
+        };
+      }
+
+      const options: WriterOptions<UserWithArray> = {
+        type: 'csv',
+        mode: 'write',
+        file: testFile,
+        config: {
+          flattenNestedObjects: true,
+        },
+      };
+      const writer = new CsvWriter<UserWithArray>(options);
+      const data: UserWithArray[] = [
+        {
+          id: 1,
+          profile: { name: 'John', tags: ['developer', 'typescript'] },
+        },
+      ];
+
+      // Act
+      const result = writer.writeSync(data);
+
+      // Assert
+      expect(result.success).toBe(true);
+      const content = fs.readFileSync(testFile, 'utf-8');
+      const lines = content.split('\n').filter((line) => line.length > 0);
+
+      expect(lines[0]).toBe('id,profile_name,profile_tags');
+      expect(lines[1]).toBe('1,John,"[""developer"",""typescript""]"');
+    });
+
+    it('should handle null values in nested objects', () => {
+      // Arrange
+      interface UserWithNull extends Record<string, unknown> {
+        id: number;
+        profile: {
+          name: string;
+          middleName: null;
+          age: number;
+        };
+      }
+
+      const options: WriterOptions<UserWithNull> = {
+        type: 'csv',
+        mode: 'write',
+        file: testFile,
+        config: {
+          flattenNestedObjects: true,
+        },
+      };
+      const writer = new CsvWriter<UserWithNull>(options);
+      const data: UserWithNull[] = [
+        {
+          id: 1,
+          profile: { name: 'John', middleName: null, age: 30 },
+        },
+      ];
+
+      // Act
+      const result = writer.writeSync(data);
+
+      // Assert
+      expect(result.success).toBe(true);
+      const content = fs.readFileSync(testFile, 'utf-8');
+      const lines = content.split('\n').filter((line) => line.length > 0);
+
+      expect(lines[0]).toBe('id,profile_name,profile_middleName,profile_age');
+      expect(lines[1]).toBe('1,John,,30');
+    });
+
+    it('should handle deeply nested objects', () => {
+      // Arrange
+      interface DeeplyNested extends Record<string, unknown> {
+        id: number;
+        user: {
+          info: {
+            name: string;
+            contact: {
+              email: string;
+            };
+          };
+        };
+      }
+
+      const options: WriterOptions<DeeplyNested> = {
+        type: 'csv',
+        mode: 'write',
+        file: testFile,
+        config: {
+          flattenNestedObjects: true,
+        },
+      };
+      const writer = new CsvWriter<DeeplyNested>(options);
+      const data: DeeplyNested[] = [
+        {
+          id: 1,
+          user: {
+            info: {
+              name: 'John',
+              contact: {
+                email: 'john@example.com',
+              },
+            },
+          },
+        },
+      ];
+
+      // Act
+      const result = writer.writeSync(data);
+
+      // Assert
+      expect(result.success).toBe(true);
+      const content = fs.readFileSync(testFile, 'utf-8');
+      const lines = content.split('\n').filter((line) => line.length > 0);
+
+      expect(lines[0]).toBe('id,user_info_name,user_info_contact_email');
+      expect(lines[1]).toBe('1,John,john@example.com');
+    });
+
+    it('should not flatten when option is false', () => {
+      // Arrange
+      const options: WriterOptions<NestedUser> = {
+        type: 'csv',
+        mode: 'write',
+        file: testFile,
+        config: {
+          flattenNestedObjects: false,
+        },
+      };
+      const writer = new CsvWriter<NestedUser>(options);
+      const data: NestedUser[] = [
+        {
+          id: 1,
+          name: 'John Doe',
+          address: { street: '123 Main St', city: 'NYC', zip: '10001' },
+          contact: { email: 'john@example.com', phone: '555-1234' },
+        },
+      ];
+
+      // Act
+      const result = writer.writeSync(data);
+
+      // Assert
+      expect(result.success).toBe(true);
+      const content = fs.readFileSync(testFile, 'utf-8');
+      const lines = content.split('\n').filter((line) => line.length > 0);
+
+      // Without flattening, nested objects are JSON stringified
+      expect(lines[0]).toBe('id,name,address,contact');
+      expect(lines[1]).toContain('1,John Doe');
+    });
+  });
+
   // Cleanup temp directory after all tests
   afterAll(() => {
     if (fs.existsSync(testDir)) {

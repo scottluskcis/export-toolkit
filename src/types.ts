@@ -194,6 +194,23 @@ export interface CsvConfig<T> {
    * @default false
    */
   includeUtf8Bom?: boolean;
+
+  /**
+   * Flatten nested objects into single-level structure.
+   *
+   * When enabled, nested objects are expanded with underscore-separated keys.
+   * Arrays are converted to JSON strings.
+   *
+   * @default false
+   *
+   * @example
+   * ```typescript
+   * // Input: { user: { name: 'John', address: { city: 'NYC' } } }
+   * // Output columns: user_name, user_address_city
+   * flattenNestedObjects: true
+   * ```
+   */
+  flattenNestedObjects?: boolean;
 }
 
 /**

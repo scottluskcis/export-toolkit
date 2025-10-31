@@ -1,5 +1,6 @@
 import type { CsvConfig, Result } from '../../types.js';
 import { HeaderInitializationError } from '../../errors.js';
+import { flattenObject } from './flattenObject.js';
 
 /**
  * Manages CSV header initialization and key determination
@@ -18,14 +19,19 @@ export class CsvHeaderManager<T extends Record<string, unknown>> {
       return { success: true, value: undefined };
     }
 
+    // Flatten object if configured
+    const dataObject = this.config?.flattenNestedObjects
+      ? (flattenObject(firstDataObject) as T)
+      : firstDataObject;
+
     // Determine which keys to use
     if (this.config?.includeKeys) {
       this.keys = this.config.includeKeys;
     } else if (this.config?.headers && this.config.headers.length > 0) {
       // If explicit headers provided, infer keys from first object
-      this.keys = Object.keys(firstDataObject) as (keyof T)[];
+      this.keys = Object.keys(dataObject) as (keyof T)[];
     } else {
-      this.keys = Object.keys(firstDataObject) as (keyof T)[];
+      this.keys = Object.keys(dataObject) as (keyof T)[];
     }
 
     if (this.keys.length === 0) {
@@ -72,7 +78,10 @@ export class CsvHeaderManager<T extends Record<string, unknown>> {
    * Converts a data object to array of values in correct order
    */
   objectToValues(data: T): unknown[] {
-    return this.getKeys().map((key) => data[key]);
+    // Flatten object if configured
+    const dataObject = this.config?.flattenNestedObjects ? (flattenObject(data) as T) : data;
+
+    return this.getKeys().map((key) => dataObject[key]);
   }
 
   /**
